@@ -1,0 +1,277 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "OpenSea Listings",
+        "version": "unknown"
+    },
+    "servers": [
+        {
+            "url": "https://api.opensea.io/wyvern/v1"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "sec0": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-API-KEY"
+            }
+        }
+    },
+    "security": [
+        {
+            "sec0": []
+        }
+    ],
+    "paths": {
+        "/orders": {
+            "get": {
+                "summary": "Retrieve orders",
+                "description": "",
+                "operationId": "retrieving-orders",
+                "parameters": [
+                    {
+                        "name": "asset_contract_address",
+                        "in": "query",
+                        "description": "Filter by smart contract address for the asset category. Needs to be defined together with `token_id` or `token_ids`.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "payment_token_address",
+                        "in": "query",
+                        "description": "Filter by the address of the smart contract of the payment token that is accepted or offered by the order",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "maker",
+                        "in": "query",
+                        "description": "Filter by the order maker's wallet address",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "taker",
+                        "in": "query",
+                        "description": "Filter by the order taker's wallet address. Orders open for any taker have the null address as their taker.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "owner",
+                        "in": "query",
+                        "description": "Filter by the asset owner's wallet address",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "is_english",
+                        "in": "query",
+                        "description": "When \"true\", only show English Auction sell orders, which wait for the highest bidder. When \"false\", exclude those.",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "bundled",
+                        "in": "query",
+                        "description": "Only show orders for bundles of assets",
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "include_bundled",
+                        "in": "query",
+                        "description": "Include orders on bundles where all assets in the bundle share the address provided in `asset_contract_address` or where the bundle's maker is the address provided in `owner`",
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "listed_after",
+                        "in": "query",
+                        "description": "Only show orders listed after this timestamp. Seconds since the Unix epoch.",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "listed_before",
+                        "in": "query",
+                        "description": "Only show orders listed before this timestamp. Seconds since the Unix epoch.",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "token_id",
+                        "in": "query",
+                        "description": "Filter by the token ID of the order's asset. Needs to be defined together with `asset_contract_address`.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "token_ids",
+                        "in": "query",
+                        "description": "Filter by a list of token IDs for the order's asset. Needs to be defined together with `asset_contract_address`.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "side",
+                        "in": "query",
+                        "description": "Filter by the side of the order. `0` for buy orders and `1` for sell orders.",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "sale_kind",
+                        "in": "query",
+                        "description": "Filter by the kind of sell order. `0` for fixed-price sales or min-bid auctions, and `1` for declining-price Dutch Auctions. NOTE: use `only_english=true` for filtering for only English Auctions",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of orders to return (capped at 50).",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Number of orders to offset by (for pagination)",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "How to sort the orders. Can be `created_date` for when they were made, or `eth_price` to see the lowest-priced orders first (converted to their ETH values). `eth_price` is only supported when `asset_contract_address`  and `token_id` are also defined.",
+                        "schema": {
+                            "type": "string",
+                            "default": "created_date"
+                        }
+                    },
+                    {
+                        "name": "order_direction",
+                        "in": "query",
+                        "description": "Can be `asc` or `desc` for ascending or descending sort. For example, to see the cheapest orders, do order_direction `asc` and order_by `eth_price`.",
+                        "schema": {
+                            "type": "string",
+                            "default": "desc"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": "{}"
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": "{}"
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/orders/post": {
+            "post": {
+                "summary": "Posting new orders",
+                "description": "Our API for posting new Orders to list an item for sale or for making bids",
+                "operationId": "posting-new-orders",
+                "responses": {
+                    "200": {
+                        "description": "200",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": "{}"
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Result": {
+                                        "value": "{}"
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "x-readme": {
+        "headers": []
+    },
+    "x-readme-fauxas": true
+}

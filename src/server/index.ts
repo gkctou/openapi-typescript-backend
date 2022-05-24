@@ -1,7 +1,7 @@
 import OpenAPIBackend from 'openapi-backend';
 import path from 'path';
 // create api with your definition file or object
-const api = new OpenAPIBackend({ definition: path.resolve(__dirname, 'petstore.yaml') });
+const api = new OpenAPIBackend({ definition: path.resolve(__dirname, '../api/petstore.yaml') });
 
 import { operations } from './schema';
 import { createHandlers } from './handlers';

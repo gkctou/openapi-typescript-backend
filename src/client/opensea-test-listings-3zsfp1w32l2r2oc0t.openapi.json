@@ -1,0 +1,1 @@
+{"openapi":"3.1.0","info":{"title":"OpenSea Listings - Testnets","version":"unknown"},"servers":[{"url":"https://testnets-api.opensea.io/wyvern/v1"}],"components":{"securitySchemes":{"sec0":{"type":"apiKey","in":"query","name":"X-API-KEY","x-default":"5bec8ae0372044cab1bef0d866c98618"}}},"security":[{"sec0":[]}],"paths":{},"x-readme":{"headers":[]},"x-readme-fauxas":true}
