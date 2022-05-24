@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "schema": "npx openapi-typescript src/server/api/petstore.yaml --output src/server/schema.d.ts",
-    "client" :"openapi --input ./src/client/opensea-54d5pd7l38yyb63.openapi.json --output ./src/client/lib/opensea --client node"
+    "client": "openapi --input ./src/client/opensea-54d5pd7l38yyb63.openapi.json --output ./src/client/lib/opensea --client node"
   },
   "author": "",
   "license": "ISC",
